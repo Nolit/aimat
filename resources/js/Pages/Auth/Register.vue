@@ -5,101 +5,106 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Layout from "@/Layouts/Layout.vue";
+import {ref} from "vue";
 
 const form = useForm({
     name: '',
     email: '',
-    password: '',
-    password_confirmation: '',
+    password: ''
 });
 
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => {
-            form.reset('password', 'password_confirmation');
-        },
-    });
+const vueForm = ref(null)
+const submit = async () => {
+    const validResult = await vueForm.value.validate()
+    if (validResult.valid) {
+        form.post(route('register'), {
+            onFinish: response => {
+
+            },
+        });
+    }
 };
+
+const rules = {
+    required: v => {
+        return !!v || 'Field is required'
+    },
+    email: v => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(v) || 'Not an email address.'
+    },
+    min: v => v.length >= 8 || 'Min 8 characters',
+};
+
+const show1 = ref(false)
+
+defineProps<{
+    errors: {
+        name: String,
+        email: String,
+        password: String
+    }
+}>()
+
+
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Register" />
+    <Layout>
+        <v-card
+            class="mx-auto pa-2"
+            min-width="400"
+            title="User Registration"
+        >
+            <v-form @submit.prevent="submit" ref="vueForm">
+                <div>
+                    <v-text-field
+                        :rules="[rules.required]"
+                        label="Name"
+                        placeholder="your nickname"
+                        hint="Enter your name to be called in our app"
+                        v-model="form.name"
+                        :error-messages="errors.name"
+                    />
+                </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+                <div>
+                    <v-text-field
+                        :rules="[rules.required, rules.email]"
+                        label="Email"
+                        placeholder="your nickname"
+                        hint="Enter your name to be called in our app"
+                        v-model="form.email"
+                        :error-messages="errors.email"
+                    />
+                </div>
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+                <div>
+                    <v-text-field
+                        v-model="form.password"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="[rules.required, rules.min]"
+                        :type="show1 ? 'text' : 'password'"
+                        label="Password"
+                        hint="At least 8 characters"
+                        counter
+                        @click:append="show1 = !show1"
+                        :error-messages="errors.password"
+                    ></v-text-field>
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+                <div class="flex items-center justify-end mt-4">
+                    <Link
+                        :href="route('login')"
+                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Already registered?
+                    </Link>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+                    <v-btn @click="submit" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Register</v-btn>
+                </div>
+            </v-form>
+        </v-card>
+    </Layout>
 </template>
