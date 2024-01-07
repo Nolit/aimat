@@ -2,7 +2,7 @@
 import Username from "@/Components/Forms/User/Username.vue";
 import Email from '@/Components/Forms/User/Email.vue';
 import Password from '@/Components/Forms/User/Password.vue';
-import { Link, useForm } from '@inertiajs/vue3';
+import {Head, Link, useForm} from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import {ref} from "vue";
 import { required, email, min } from "@/utils/rules"
@@ -45,6 +45,7 @@ defineProps<{
 </script>
 
 <template>
+    <Head title="Registration" />
     <Layout>
         <v-card
             class="mx-auto pa-2"

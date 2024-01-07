@@ -12,6 +12,8 @@ defineProps<{
 </script>
 
 <template>
+    <Head title="TOP" />
+
     <Layout>
         Welcome!
     </Layout>

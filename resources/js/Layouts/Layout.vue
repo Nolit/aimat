@@ -12,8 +12,6 @@ const isGuest = page.props.isGuest
 </script>
 
 <template>
-    <Head title="Aimat" />
-
     <v-layout class="rounded rounded-md">
         <v-app-bar height="80">
             <v-row justify="start">

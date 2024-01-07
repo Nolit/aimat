@@ -36,14 +36,13 @@ const rules = {
 </script>
 
 <template>
+    <Head title="Login" />
     <Layout>
         <v-card
             class="mx-auto pa-2"
             min-width="400"
             title="Login"
         >
-            <Head title="Log in" />
-
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                 {{ status }}
             </div>
