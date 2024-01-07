@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import Username from "@/Components/Forms/User/Username.vue";
+import Email from '@/Components/Forms/User/Email.vue';
+import Password from '@/Components/Forms/User/Password.vue';
+import { Link, useForm } from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import {ref} from "vue";
 import { required, email, min } from "@/utils/rules"
@@ -55,39 +53,15 @@ defineProps<{
         >
             <v-form @submit.prevent="submit" ref="vueForm">
                 <div>
-                    <v-text-field
-                        :rules="[rules.required]"
-                        label="Name"
-                        placeholder="your nickname"
-                        hint="Enter your name to be called in our app"
-                        v-model="form.name"
-                        :error-messages="errors.name"
-                    />
+                    <Username v-model="form.name" :error="errors.name" />
                 </div>
 
                 <div>
-                    <v-text-field
-                        :rules="[rules.required, rules.email]"
-                        label="Email"
-                        placeholder="your nickname"
-                        hint="Enter your name to be called in our app"
-                        v-model="form.email"
-                        :error-messages="errors.email"
-                    />
+                    <Email v-model="form.email" :error="errors.email" />
                 </div>
 
                 <div>
-                    <v-text-field
-                        v-model="form.password"
-                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :rules="[rules.required, rules.min]"
-                        :type="show1 ? 'text' : 'password'"
-                        label="Password"
-                        hint="At least 8 characters"
-                        counter
-                        @click:append="show1 = !show1"
-                        :error-messages="errors.password"
-                    ></v-text-field>
+                    <Password :error="errors.password" v-model="form.password" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
