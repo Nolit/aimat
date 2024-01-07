@@ -40,7 +40,7 @@ const rules = {
         <v-card
             class="mx-auto pa-2"
             min-width="400"
-            title="Login in"
+            title="Login"
         >
             <Head title="Log in" />
 
