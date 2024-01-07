@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import {ref} from "vue";
+import { required, email, min } from "@/utils/rules"
 
 const form = useForm({
     name: '',
@@ -27,14 +28,9 @@ const submit = async () => {
 };
 
 const rules = {
-    required: v => {
-        return !!v || 'Field is required'
-    },
-    email: v => {
-        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return pattern.test(v) || 'Not an email address.'
-    },
-    min: v => v.length >= 8 || 'Min 8 characters',
+    required: required,
+    email: email,
+    min: min(8)
 };
 
 const show1 = ref(false)
