@@ -18,6 +18,7 @@ const rules = {
 
 <template>
     <v-text-field
+        name="email"
         :rules="[rules.required, rules.email]"
         label="Email"
         placeholder="your email address"
