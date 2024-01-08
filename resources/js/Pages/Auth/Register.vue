@@ -5,7 +5,6 @@ import Password from '@/Components/Forms/User/Password.vue';
 import {Head, Link, useForm} from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import {ref} from "vue";
-import { required, email, min } from "@/utils/rules"
 
 const form = useForm({
     name: '',
@@ -24,14 +23,6 @@ const submit = async () => {
         });
     }
 };
-
-const rules = {
-    required: required,
-    email: email,
-    min: min(8)
-};
-
-const show1 = ref(false)
 
 defineProps<{
     errors: {
@@ -73,7 +64,7 @@ defineProps<{
                         Already registered?
                     </Link>
 
-                    <v-btn @click="submit" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Register</v-btn>
+                    <v-btn type="submit" class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">Register</v-btn>
                 </div>
             </v-form>
         </v-card>
