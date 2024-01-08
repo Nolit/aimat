@@ -2,7 +2,6 @@
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
-import { required, email } from "@/utils/rules"
 import Email from "@/Components/Forms/User/Email.vue";
 import Password from "@/Components/Forms/User/Password.vue";
 
@@ -29,10 +28,6 @@ const submit = () => {
     });
 };
 
-const rules = {
-    required: required,
-    email: email
-};
 </script>
 
 <template>

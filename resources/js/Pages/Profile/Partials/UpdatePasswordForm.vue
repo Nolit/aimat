@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Password from "@/Components/Forms/User/Password.vue";
 
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
@@ -12,27 +13,41 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
 const form = useForm({
     current_password: '',
     password: '',
-    password_confirmation: '',
 });
 
-const updatePassword = () => {
+defineProps<{
+    errors: {
+        password: String,
+        current_password: String,
+    }
+}>();
+
+const vueForm = ref(null)
+const updatePassword = async () => {
+    const validResult = await vueForm.value.validate()
+    if (!validResult.valid) {
+        return
+    }
     form.put(route('password.update'), {
         preserveScroll: true,
         onSuccess: () => {
             form.reset();
+            vueForm.value.resetValidation()
         },
         onError: () => {
-            if (form.errors.password) {
-                form.reset('password', 'password_confirmation');
-                passwordInput.value?.focus();
-            }
-            if (form.errors.current_password) {
-                form.reset('current_password');
-                currentPasswordInput.value?.focus();
-            }
+            // if (form.errors.password) {
+            //     form.reset('password');
+            //     passwordInput.value?.focus();
+            // }
+            // if (form.errors.current_password) {
+            //     form.reset('current_password');
+            //     currentPasswordInput.value?.focus();
+            // }
         },
     });
 };
+
+
 </script>
 
 <template>
@@ -45,49 +60,10 @@ const updatePassword = () => {
             </p>
         </header>
 
-        <form @submit.prevent="updatePassword" class="mt-6 space-y-6">
+        <v-form @submit.prevent="updatePassword" class="mt-6 space-y-6" ref="vueForm">
             <div>
-                <InputLabel for="current_password" value="Current Password" />
-
-                <TextInput
-                    id="current_password"
-                    ref="currentPasswordInput"
-                    v-model="form.current_password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="current-password"
-                />
-
-                <InputError :message="form.errors.current_password" class="mt-2" />
-            </div>
-
-            <div>
-                <InputLabel for="password" value="New Password" />
-
-                <TextInput
-                    id="password"
-                    ref="passwordInput"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-
-                <InputError :message="form.errors.password" class="mt-2" />
-            </div>
-
-            <div>
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    autocomplete="new-password"
-                />
-
-                <InputError :message="form.errors.password_confirmation" class="mt-2" />
+                <Password :error="errors.current_password" v-model="form.current_password" label="Current Password" name="current_password" />
+                <Password :error="errors.password" v-model="form.password" label="New Password" />
             </div>
 
             <div class="flex items-center gap-4">
@@ -102,6 +78,6 @@ const updatePassword = () => {
                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Saved.</p>
                 </Transition>
             </div>
-        </form>
+        </v-form>
     </section>
 </template>

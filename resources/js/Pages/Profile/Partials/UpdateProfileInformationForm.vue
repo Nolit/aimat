@@ -4,10 +4,16 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import Username from "@/Components/Forms/User/Username.vue";
+import Email from "@/Components/Forms/User/Email.vue";
 
 defineProps<{
     mustVerifyEmail?: Boolean;
     status?: String;
+    errors: {
+        name: String,
+        email: String,
+    }
 }>();
 
 const user = usePage().props.auth.user;
@@ -16,6 +22,8 @@ const form = useForm({
     name: user.name,
     email: user.email,
 });
+
+
 </script>
 
 <template>
@@ -30,36 +38,12 @@ const form = useForm({
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
             <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
+                <Username v-model="form.name" :error="errors.name" />
             </div>
 
             <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                <Email v-model="form.email" :error="errors.email" />
             </div>
-
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
                     Your email address is unverified.

@@ -2,9 +2,17 @@
 import { ref } from 'vue';
 import { required, min } from "@/utils/rules"
 
-defineProps<{
-    error: string
-}>();
+defineProps({
+    error: String,
+    label: {
+        type: String,
+        default: "Password"
+    },
+    name: {
+        type: String,
+        default: "password"
+    }
+});
 
 defineEmits(['input']);
 const model = defineModel()
@@ -23,7 +31,8 @@ const show = ref(false)
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required, rules.min]"
         :type="show ? 'text' : 'password'"
-        label="Password"
+        :label="label"
+        :name="name"
         hint="At least 8 characters"
         counter
         @click:append="show = !show"
