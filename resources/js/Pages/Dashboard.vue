@@ -22,6 +22,16 @@ const todayTodo = [
         completed: false
     },
 ]
+
+const openAddingDailyTaskModal = () => {
+    alert('open a dialog for adding daily task')
+}
+const openAddingWeeklyTaskModal = () => {
+    alert('open a dialog for adding weekly task')
+}
+const openAddingMonthlyTaskModal = () => {
+    alert('open a dialog for adding monthly task')
+}
 </script>
 
 <template>
@@ -34,9 +44,9 @@ const todayTodo = [
 
         <div class="py-12">
             <v-row>
-                <v-col><TaskCard title="Today" :tasks="todayTodo" /></v-col>
-                <v-col><TaskCard title="This week" :tasks="todayTodo" /></v-col>
-                <v-col><TaskCard title="This month" :tasks="todayTodo" /></v-col>
+                <v-col><TaskCard title="Daily" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :target1="'2024-01-10'" /></v-col>
+                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :target1="'2024-01-08'"  :target2="'2024-01-14'" /></v-col>
+                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :target1="'January'" /></v-col>
 
             </v-row>
         </div>
