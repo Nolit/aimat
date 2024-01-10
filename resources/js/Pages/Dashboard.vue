@@ -4,7 +4,44 @@ import { Head } from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import TaskCard from "@/Components/Task/TaskCard.vue";
 import Target from '@/Components/Task/Target'
+import {
+    subDays,
+    addDays,
+    eachDayOfInterval,
+    format,
+    previousMonday,
+    nextMonday,
+    nextSunday,
+    subWeeks,
+    subYears, addMonths
+} from "date-fns";
+
 defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean })
+
+const today = new Date()
+
+const targetsForDaily = eachDayOfInterval({
+    start: subDays(today, 30),
+    end: addDays(today, 30)
+}).map(date => new Target(format(date, 'yyyy-MM-dd')))
+
+const startDaysOfWeek = [previousMonday(subWeeks(today, 8))]
+for (let i=0; i<16; i++) {
+    startDaysOfWeek.push(nextMonday(startDaysOfWeek[startDaysOfWeek.length-1]))
+}
+const targetsForWeekly = startDaysOfWeek.map(
+    startDayOfWeek => new Target(
+        format(startDayOfWeek, 'yyyy-MM-dd'),
+        format(nextSunday(startDayOfWeek), 'yyyy-MM-dd')
+    )
+)
+
+const datesOfMonth = [subYears(today, 1)]
+for (let i=0; i<24; i++) {
+    datesOfMonth.push(addMonths(datesOfMonth[datesOfMonth.length-1], 1))
+}
+const targetsForMonthly = datesOfMonth.map(date => new Target(format(date, 'MMMM yyyy')))
+
 const todayTodo = [
     {
         title: 'Item #1',
@@ -23,30 +60,6 @@ const todayTodo = [
     },
 ]
 
-const targetsForDaily = [
-    new Target('2024-01-08'),
-    new Target('2024-01-09'),
-    new Target('2024-01-10'),
-    new Target('2024-01-11'),
-    new Target('2024-01-12'),
-]
-
-const targetsForWeekly = [
-    new Target('2023-12-25', '2023-12-31'),
-    new Target('2024-01-01', '2024-01-07'),
-    new Target('2024-01-08', '2024-01-14'),
-    new Target('2024-01-15', '2024-01-21'),
-    new Target('2024-01-22', '2024-01-29'),
-]
-
-const targetsForMonthly = [
-    new Target('November'),
-    new Target('December'),
-    new Target('January'),
-    new Target('February'),
-    new Target('May'),
-]
-
 
 const openAddingDailyTaskModal = () => {
     alert('open a dialog for adding daily task')
@@ -62,17 +75,16 @@ const openAddingMonthlyTaskModal = () => {
 <template>
     <Head title="Dashboard" />
 
-    <Layout  :can-register="canRegister" :can-login="canLogin" :can-logout="canLogout">
+    <Layout :can-register="canRegister" :can-login="canLogin" :can-logout="canLogout">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
         </template>
 
         <div class="py-12">
             <v-row>
-                <v-col><TaskCard title="Daily" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="1" /></v-col>
-                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="2"  /></v-col>
-                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="2"  /></v-col>
-
+                <v-col><TaskCard title="Daily" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
+                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="8"  /></v-col>
+                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="12"  /></v-col>
             </v-row>
         </div>
     </Layout>
