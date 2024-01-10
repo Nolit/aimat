@@ -23,6 +23,11 @@ const isGuest = page.props.isGuest
                         <v-icon icon="mdi-menu" v-bind="props" class="mr-5" size="40"></v-icon>
                     </template>
                     <v-list>
+                        <v-list-item v-if="!isGuest">
+                            <v-list-item-title>
+                                <Link :href="route('dashboard')">Dashboard</Link>
+                            </v-list-item-title>
+                        </v-list-item>
                         <v-list-item v-if="isGuest">
                             <v-list-item-title>
                                 <Link :href="route('login')">Log in</Link>
