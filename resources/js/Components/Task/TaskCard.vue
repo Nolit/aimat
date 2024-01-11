@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Target from '@/Components/Task/Target'
+import TaskModal from "@/Components/Task/TaskModal.vue";
 
 const props = defineProps<{
     tasks: Array<{
@@ -13,10 +14,11 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['clicked:add', 'changed:target', 'clicked:prev', 'clicked:next', 'clicked:target']);
-const model = defineModel()
 const targetKey = ref(props.targetKey)
 const tasks = props.tasks
 //TODO: sort by completed last
+
+const modal = ref(false)
 
 const prev = () => {
     targetKey.value -= 1
@@ -63,11 +65,14 @@ const next = () => {
                     </v-row>
                 </v-list-item>
             </template>
-            <v-list-item  class="d-flex flex-row justify-center" @click="$emit('clicked:add')">
+            <v-list-item  class="d-flex flex-row justify-center" @click="modal = true">
                 <v-icon icon="mdi-plus-circle-outline" color="grey" />
             </v-list-item>
         </v-list>
     </v-card>
+    <TaskModal v-model="modal">
+
+    </TaskModal>
 </template>
 
 <style scoped>
