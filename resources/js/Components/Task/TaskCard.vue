@@ -1,22 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import {required, email} from "@/utils/rules"
 import Target from '@/Components/Task/Target'
-
-
-
-// class TargetList {
-//     private targets: Array<Target>
-//     private curent: Number
-//
-//     next() {
-//
-//     }
-//
-//     prev() {
-//
-//     }
-// }
 
 const props = defineProps<{
     tasks: Array<{
@@ -86,7 +70,7 @@ const next = () => {
     </v-card>
 </template>
 
-<style>
+<style scoped>
     .btn-prev:disabled,.btn-next:disabled {
         color: #ffffff;
     }
