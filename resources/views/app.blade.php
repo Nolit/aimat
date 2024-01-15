@@ -14,6 +14,9 @@
         @routes
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
+        <script>
+            var __locale = '{{ session('locale', 'en') }}'
+        </script>
     </head>
     <body class="font-sans antialiased">
         @inertia

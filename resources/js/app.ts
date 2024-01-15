@@ -8,9 +8,16 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
-import { Head, Link } from '@inertiajs/vue3';
+import { createI18n } from "vue-i18n";
+import messages from "./lang/messages.js";
 import '@mdi/font/css/materialdesignicons.css'
 
+const i18n = createI18n({
+    legacy: false,
+    locale: __locale,
+    useScope: 'global',
+    messages,
+});
 const vuetify = createVuetify({
     // ... your configuration
     components
@@ -25,6 +32,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(vuetify)
+            .use(i18n)
             .mount(el);
     },
     progress: {

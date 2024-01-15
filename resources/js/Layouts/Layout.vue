@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import DropdownLink from "@/Components/DropdownLink.vue";
-
+import { Link, router, usePage } from '@inertiajs/vue3';
+import {ref, App} from "vue";
+import {useI18n} from "vue-i18n";
+const { t, locale } = useI18n()
+const locale2 = ref(locale)
 const logout = () => {
     router.post(route('logout'))
+}
+
+const changeLocale = locale => {
+    router.put(route('locale.put', {locale: locale}))
+    locale2.value = locale
 }
 
 const page = usePage()
@@ -20,32 +27,45 @@ const isGuest = page.props.isGuest
             <v-row justify="end">
                 <v-menu>
                     <template v-slot:activator="{ props }">
+                        <v-btn v-bind="props">{{ $t('language') }}</v-btn>
+                    </template>
+                    <v-list>
+                        <v-list-item @click="changeLocale('en')">
+                            English
+                        </v-list-item>
+                        <v-list-item @click="changeLocale('ja')">
+                            日本語
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+                <v-menu>
+                    <template v-slot:activator="{ props }">
                         <v-icon icon="mdi-menu" v-bind="props" class="mr-5" size="40"></v-icon>
                     </template>
                     <v-list>
                         <v-list-item v-if="!isGuest">
                             <v-list-item-title>
-                                <Link :href="route('dashboard')">Dashboard</Link>
+                                <Link :href="route('dashboard')">{{ $t('dashboard') }}</Link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-if="isGuest">
                             <v-list-item-title>
-                                <Link :href="route('login')">Log in</Link>
+                                <Link :href="route('login')">{{ $t('login') }}</Link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-if="isGuest">
                             <v-list-item-title>
-                                <Link :href="route('register')">Register</Link>
+                                <Link :href="route('register')">{{ $t('register') }}</Link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-if="!isGuest">
                             <v-list-item-title>
-                                <button @click="logout()">Log out</button>
+                                <button @click="logout()">{{ $t('logout') }}</button>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-if="!isGuest">
                             <v-list-item-title>
-                                <Link :href="route('profile.edit')">Profile</Link>
+                                <Link :href="route('profile.edit')">{{ $t('profile') }}</Link>
                             </v-list-item-title>
                         </v-list-item>
                     </v-list>

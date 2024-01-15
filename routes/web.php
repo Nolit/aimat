@@ -32,4 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::put('/locale/{locale}', function($locale) {
+    session(['locale' => $locale]);
+})->name('locale.put');
+
 require __DIR__.'/auth.php';
