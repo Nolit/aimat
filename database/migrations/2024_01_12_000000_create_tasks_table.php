@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('commitment_id');
+            $table->integer('goal_id')->nullable();
+            $table->string('title');
             $table->string('note');
-            $table->integer('progress');
-            $table->boolean('is_archived');
+            $table->boolean('is_archived')->default(false);
             $table->timestamps();
         });
     }

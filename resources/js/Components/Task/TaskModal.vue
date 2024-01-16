@@ -2,7 +2,43 @@
     // const props = defineProps<{
     //     active: Boolean,
     // }>();
+    import {useForm} from "@inertiajs/vue3";
+
+    const goals = [
+        {
+            title: '----------------',
+            value: null,
+        },
+        {
+            title: 'Goal #1',
+            value: 1,
+        },
+        {
+            title: 'Goal #2',
+            value: 2,
+        },
+        {
+            title: 'Goal #3',
+            value: 3,
+        },
+    ]
     const model = defineModel()
+
+    const form = useForm({
+        title: '',
+        goal_id: null,
+        note: '',
+    });
+    const submit = () => {
+        form.post(route('tasks.store'), {
+            onFinish: () => {
+                form.reset()
+                model.value = false
+                //TODO: show a message
+            },
+            preserveState: false
+        });
+    };
 </script>
 
 <template>
@@ -23,33 +59,21 @@
                         >
                             <v-text-field
                                 label="Title*"
+                                v-model="form.title"
                                 required
                             ></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col>
-                            <v-text-field
-                                type="number"
-                                label="Daily Quantity"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col>
-                            <v-select
-                                :items="['times', 'pages', 'books', 'seconds', 'minutes', 'hours']"
-                                label="Unit"
-                                required
-                            ></v-select>
-                        </v-col>
                         <v-col
                             cols="12"
                             sm="6"
                             md="4"
                         >
                             <v-select
-                                :items="['-----', 'Goal1', 'Goal2', 'Goal3', 'Goal4']"
+                                :items="goals"
                                 label="Goal"
+                                v-model="form.goal_id"
                                 required
                             ></v-select>
                         </v-col>
@@ -58,6 +82,7 @@
                         <v-col>
                             <v-textarea
                                 label="Memo"
+                                v-model="form.note"
                             ></v-textarea>
                         </v-col>
                     </v-row>
@@ -75,7 +100,7 @@
                 <v-btn
                     color="blue-darken-1"
                     variant="text"
-                    @click="model = false"
+                    @click="submit"
                 >
                     Save
                 </v-btn>
