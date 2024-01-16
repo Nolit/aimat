@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Link, router, usePage } from '@inertiajs/vue3';
-import {ref, App} from "vue";
+import {ref} from "vue";
 import {useI18n} from "vue-i18n";
-const { t, locale } = useI18n()
+const { locale } = useI18n()
 const locale2 = ref(locale)
 const logout = () => {
     router.post(route('logout'))
