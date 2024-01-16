@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('period_type');
             $table->string('target');
             $table->integer('target_level');
-            $table->integer('target_level_unit_type');
+            $table->string('target_unit');
             $table->string('note');
             $table->timestamps();
         });

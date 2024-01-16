@@ -17,7 +17,7 @@ class Commitment extends Model
         'period_type',
         'target',
         'target_level',
-        'target_level_unit_type',
+        'target_level_unit',
         'note',
     ];
 
