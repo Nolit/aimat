@@ -15,8 +15,20 @@ import {
     subWeeks,
     subYears, addMonths
 } from "date-fns";
+import TaskModal from "@/Components/Task/TaskModal.vue";
+import {ref} from "vue";
+import {Task} from "@/types";
 
-defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean })
+const props = defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean, tasks: Array<Task> })
+const _tasks = props.tasks?.map(task => {
+    return {
+        title: task.title,
+        value: task.id,
+        completed: task.is_archived
+    }
+})
+const tasks = ref(_tasks)
+const taskModal = ref(false)
 
 const today = new Date()
 
@@ -82,10 +94,16 @@ const openAddingMonthlyTaskModal = () => {
 
         <div class="py-12">
             <v-row>
+                <v-col><TaskCard title="Task" :tasks="tasks" @clicked:add="taskModal = true" :disable-add="false" /></v-col>
                 <v-col><TaskCard title="Daily" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
                 <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="8"  /></v-col>
                 <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="12"  /></v-col>
             </v-row>
         </div>
     </Layout>
+
+
+    <TaskModal v-model="taskModal">
+
+    </TaskModal>
 </template>

@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Target from '@/Components/Task/Target'
-import TaskModal from "@/Components/Task/TaskModal.vue";
 
-const props = defineProps<{
+export interface Props {
     tasks: Array<{
         title: string
         completed: boolean
     }>
     title: string
-    targets: Array<Target>
+    targets: Array<Target>|null
     targetKey: Number
-}>();
+    disableAdd: boolean
+}
 
-const emit = defineEmits(['clicked:add', 'changed:target', 'clicked:prev', 'clicked:next', 'clicked:target']);
+const props = withDefaults(defineProps<Props>(), {
+    tasks: null,
+    title: '',
+    targets: null,
+    targetKey: 0,
+    disableAdd: true,
+})
+
+const emit = defineEmits(['clicked:add', 'clicked:prev', 'clicked:next', 'clicked:target']);
 const targetKey = ref(props.targetKey)
-const tasks = props.tasks
 //TODO: sort by completed last
-
-const modal = ref(false)
 
 const prev = () => {
     targetKey.value -= 1
@@ -33,7 +38,7 @@ const next = () => {
 
 <template>
     <v-card :title="title" min-height="100" min-width="400">
-        <v-card-subtitle>
+        <v-card-subtitle v-if="targets !== null">
             <v-row style="text-align: center;">
                 <v-col cols="2">
                     <v-btn class="btn-prev" :flat="true" @click="prev()" :disabled="targetKey <= 0">
@@ -65,14 +70,11 @@ const next = () => {
                     </v-row>
                 </v-list-item>
             </template>
-            <v-list-item  class="d-flex flex-row justify-center" @click="modal = true">
+            <v-list-item v-if="!disableAdd" class="d-flex flex-row justify-center" @click="$emit('clicked:add')">
                 <v-icon icon="mdi-plus-circle-outline" color="grey" />
             </v-list-item>
         </v-list>
     </v-card>
-    <TaskModal v-model="modal">
-
-    </TaskModal>
 </template>
 
 <style scoped>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -14,9 +15,10 @@ class Task extends Model
      */
     protected $fillable = [
         'goal_id',
+        'user_id',
         'title',
         'note',
-        'progress',
+        'date',
         'is_archived',
     ];
 
@@ -32,5 +34,12 @@ class Task extends Model
      *
      * @var array<string, string>
      */
-    protected $casts = [];
+    protected $casts = [
+        'date' => 'datetime:Y-m-d'
+    ];
+
+    public function scopeArchived(Builder $query, $override = true): Builder
+    {
+        return $query->where('is_archived', $override);
+    }
 }

@@ -32,13 +32,17 @@
     const submit = () => {
         form.post(route('tasks.store'), {
             onFinish: () => {
-                form.reset()
-                model.value = false
                 //TODO: show a message
+                close()
             },
             preserveState: false
         });
     };
+
+    const close = () => {
+        form.reset()
+        model.value = false
+    }
 </script>
 
 <template>
@@ -93,7 +97,7 @@
                 <v-btn
                     color="blue-darken-1"
                     variant="text"
-                    @click="model = false"
+                    @click="close"
                 >
                     Close
                 </v-btn>
