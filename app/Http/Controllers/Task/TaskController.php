@@ -21,7 +21,7 @@ class TaskController extends Controller
         $this->taskService->create(
             userId: Auth::id(),
             title: $request->title,
-            note: $request->note,
+            note: $request->note ?? '',
             goalId: $request->goal_id,
             date: $request->get('date')
         );
@@ -32,7 +32,7 @@ class TaskController extends Controller
         $this->taskService->update(
             id: $id,
             title: $request->title,
-            note: $request->note,
+            note: $request->note ?? '',
             goalId: $request->goal_id,
             date: $request->get('date')
         );
