@@ -24,4 +24,14 @@ class TaskService
             'date' => $date
         ])->save();
     }
+    public function update(int $id, string $title, string $note = '', ?int $goalId = null, ?string $date = null): bool
+    {
+        $task = Task::findOrFail($id);
+        return $task->fill([
+            'title' => $title,
+            'note' => $note,
+            'goal_id' => $goalId,
+            'date' => $date
+        ])->save();
+    }
 }

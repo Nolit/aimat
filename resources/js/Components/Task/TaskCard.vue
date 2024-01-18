@@ -4,8 +4,10 @@ import Target from '@/Components/Task/Target'
 
 export interface Props {
     tasks: Array<{
+        id: number
         title: string
         completed: boolean
+        note: string
     }>
     title: string
     targets: Array<Target>|null
@@ -21,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
     disableAdd: true,
 })
 
-const emit = defineEmits(['clicked:add', 'clicked:prev', 'clicked:next', 'clicked:target']);
+const emit = defineEmits(['clicked:add', 'clicked:update', 'clicked:prev', 'clicked:next', 'clicked:target']);
 const targetKey = ref(props.targetKey)
 //TODO: sort by completed last
 
@@ -59,7 +61,7 @@ const next = () => {
         </v-card-subtitle>
         <v-list>
             <template v-for="task in tasks">
-                <v-list-item>
+                <v-list-item @click="$emit('clicked:update', task.id)">
                     <v-row>
                         <v-col cols="1">
                             <v-icon icon="mdi-check" color="red" v-show="task.completed" />

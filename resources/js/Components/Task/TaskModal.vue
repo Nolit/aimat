@@ -1,8 +1,44 @@
 <script setup lang="ts">
-    // const props = defineProps<{
-    //     active: Boolean,
-    // }>();
+    import {Task} from "@/types";
+
     import {useForm} from "@inertiajs/vue3";
+
+    export interface Props {
+        task: Task|undefined
+    }
+
+    const props = defineProps<Props>();
+    const model = defineModel()
+
+    const form = useForm({
+        title: props.task?.title,
+        goal_id: null,
+        note: props.task?.note,
+    });
+    const submit = () => {
+        if (props.task) {
+            form.patch(route('tasks.update', { id: props.task.id }), {
+                onFinish: () => {
+                    //TODO: show a message
+                    close()
+                },
+                preserveState: false
+            });
+        } else {
+            form.post(route('tasks.store'), {
+                onFinish: () => {
+                    //TODO: show a message
+                    close()
+                },
+                preserveState: false
+            });
+        }
+    };
+
+    const close = () => {
+        form.reset()
+        model.value = false
+    }
 
     const goals = [
         {
@@ -22,27 +58,6 @@
             value: 3,
         },
     ]
-    const model = defineModel()
-
-    const form = useForm({
-        title: '',
-        goal_id: null,
-        note: '',
-    });
-    const submit = () => {
-        form.post(route('tasks.store'), {
-            onFinish: () => {
-                //TODO: show a message
-                close()
-            },
-            preserveState: false
-        });
-    };
-
-    const close = () => {
-        form.reset()
-        model.value = false
-    }
 </script>
 
 <template>
@@ -53,7 +68,7 @@
     >
         <v-card>
             <v-card-title>
-                <span class="text-h5">New Daily Task</span>
+                <span class="text-h5">Task</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
