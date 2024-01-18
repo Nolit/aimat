@@ -21,9 +21,4 @@ class DashboardController extends Controller
             'tasks' => $this->taskService->get(Auth::id())
         ]);
     }
-
-    public function store(StoreTaskRequest $request)
-    {
-        $this->taskService->create(title: $request->title, note: $request->note, goalId: $request->goal_id, date: $request->get('date'));
-    }
 }
