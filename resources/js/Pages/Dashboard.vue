@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import Layout from "@/Layouts/Layout.vue";
 import TaskCard from "@/Components/Task/TaskCard.vue";
 import Target from '@/Components/Task/Target'
@@ -16,19 +15,20 @@ import {
     subYears, addMonths
 } from "date-fns";
 import TaskModal from "@/Components/Task/TaskModal.vue";
-import {Ref, ref} from "vue";
+import {Ref, ref, nextTick, computed} from "vue";
 import {Task} from "@/types";
 
 const props = defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean, tasks: Array<Task> })
-const _tasks = props.tasks?.map(task => {
+
+const tasks = computed(() => props.tasks?.map(task => {
     return {
         title: task.title,
         id: task.id,
         completed: task.is_archived,
         note: task.note
     }
-})
-const tasks = ref(_tasks)
+}))
+
 const taskModal: Ref<{task: Task|null, open: boolean}> = ref({
     task: null,
     open: false
@@ -80,6 +80,11 @@ const openTaskModal = (id?: number|null) => {
     taskModal.value.task = tasks.value.find((task) => task.id === id)
     taskModal.value.open = true
 }
+const reloadTasks = () => {
+    nextTick(() => {
+        router.reload({ only: ['tasks'] })
+    })
+}
 
 const openAddingDailyTaskModal = () => {
     alert('open a dialog for adding daily task')
@@ -111,7 +116,7 @@ const openAddingMonthlyTaskModal = () => {
     </Layout>
 
 
-    <TaskModal v-if="taskModal.open" v-model="taskModal.open" :task="taskModal.task">
+    <TaskModal v-if="taskModal.open" v-model="taskModal.open" :task="taskModal.task" @updated:task="reloadTasks()">
 
     </TaskModal>
 </template>
