@@ -3,7 +3,6 @@
     import { required } from "@/utils/rules"
     import {useForm} from "@inertiajs/vue3";
     import {ref} from "vue";
-    import Username from "@/Components/Forms/User/Username.vue";
 
     export interface Props {
         task: Task|undefined
@@ -17,6 +16,7 @@
         title: props.task?.title ?? '',
         goal_id: null,
         note: props.task?.note,
+        is_achieved: props.task?.is_achieved
     });
     const vueForm = ref(null)
 
@@ -115,6 +115,9 @@
                                     v-model="form.note"
                                 ></v-textarea>
                             </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-checkbox label="achieved" color="success" v-model="form.is_achieved" />
                         </v-row>
                     </v-container>
                 </v-card-text>

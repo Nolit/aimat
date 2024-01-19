@@ -19,7 +19,7 @@ class Task extends Model
         'title',
         'note',
         'date',
-        'is_archived',
+        'is_achieved',
     ];
 
     /**
@@ -38,8 +38,8 @@ class Task extends Model
         'date' => 'datetime:Y-m-d'
     ];
 
-    public function scopeArchived(Builder $query, $override = true): Builder
+    public function scopeAchieved(Builder $query, $override = true): Builder
     {
-        return $query->where('is_archived', $override);
+        return $query->where('is_achieved', $override);
     }
 }

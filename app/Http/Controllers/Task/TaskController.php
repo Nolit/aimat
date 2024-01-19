@@ -23,7 +23,8 @@ class TaskController extends Controller
             title: $request->title,
             note: $request->note ?? '',
             goalId: $request->goal_id,
-            date: $request->get('date')
+            date: $request->get('date'),
+            is_achieved: $request->is_achieved ?? false
         );
     }
 
@@ -34,7 +35,8 @@ class TaskController extends Controller
             title: $request->title,
             note: $request->note ?? '',
             goalId: $request->goal_id,
-            date: $request->get('date')
+            date: $request->get('date'),
+            is_achieved: $request->is_achieved ?? false
         );
 
     }

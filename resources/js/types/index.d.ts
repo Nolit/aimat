@@ -19,6 +19,6 @@ export interface Task {
     title: string;
     note: string;
     date: string;
-    is_archived: boolean;
+    is_achieved: boolean;
 }
 

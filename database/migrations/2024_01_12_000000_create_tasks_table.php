@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('goal_id')->nullable();
             $table->string('title');
             $table->string('note');
-            $table->boolean('is_archived')->default(false);
+            $table->boolean('is_achieved')->default(false);
             $table->date('date')->nullable();
             $table->timestamps();
         });
