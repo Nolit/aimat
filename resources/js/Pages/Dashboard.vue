@@ -20,15 +20,6 @@ import {Task} from "@/types";
 
 const props = defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean, tasks: Array<Task> })
 
-const tasks = computed(() => props.tasks?.map(task => {
-    return {
-        title: task.title,
-        id: task.id,
-        completed: task.is_archived,
-        note: task.note
-    }
-}))
-
 const taskModal: Ref<{task: Task|null, open: boolean}> = ref({
     task: null,
     open: false
@@ -77,7 +68,7 @@ const todayTodo = [
 ]
 
 const openTaskModal = (id?: number|null) => {
-    taskModal.value.task = tasks.value.find((task) => task.id === id)
+    taskModal.value.task = props.tasks.find((task) => task.id === id)
     taskModal.value.open = true
 }
 const reloadTasks = () => {
