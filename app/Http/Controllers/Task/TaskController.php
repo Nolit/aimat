@@ -30,16 +30,20 @@ class TaskController extends Controller
         );
     }
 
-    public function update(int $id, UpdateTaskRequest $request)
+    public function update(UpdateTaskRequest $request, Task $task, )
     {
+        if ($request->user()->cannot('update', $task)) {
+            return redirect()->back()->withErrors(['forbidden operation']);
+        }
         $this->taskService->update(
-            id: $id,
+            id: $task->id,
             title: $request->title,
             note: $request->note ?? '',
             goalId: $request->goal_id,
             date: $request->get('date'),
             is_achieved: $request->is_achieved ?? false
         );
+    }
 
     public function destroy(DeleteTaskRequest $request, Task $task)
     {
