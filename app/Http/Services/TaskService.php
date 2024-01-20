@@ -36,4 +36,9 @@ class TaskService
             'is_achieved' => $is_achieved,
         ])->save();
     }
+
+    public function delete(int $id): bool
+    {
+        return Task::destroy([$id]);
+    }
 }

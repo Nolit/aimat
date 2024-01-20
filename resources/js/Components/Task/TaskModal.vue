@@ -39,6 +39,10 @@
         }
     };
 
+    const deleteTask = () => {
+        form.delete(route('tasks.destroy', { id: props.task.id }), options);
+    }
+
     const rules = {
         required: required,
     };
@@ -121,7 +125,15 @@
                         </v-row>
                     </v-container>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions class="px-7">
+                    <v-btn
+                        v-if="task !== undefined"
+                        type="button"
+                        color="red"
+                        variant="text"
+                        @click="deleteTask"
+                    >
+                        Delete</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn
                         type="button"
