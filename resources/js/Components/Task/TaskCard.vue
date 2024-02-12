@@ -41,23 +41,23 @@ const next = () => {
 <template>
     <v-card :title="title" min-height="100" min-width="400">
         <v-card-subtitle v-if="targets !== null">
-            <v-row style="text-align: center;">
-                <v-col cols="2">
-                    <v-btn class="btn-prev" :flat="true" @click="prev()" :disabled="targetKey <= 0">
-                        <v-icon icon="mdi-arrow-left-bold" color="grey" />
-                    </v-btn>
-                </v-col>
-                <v-col>
-                    <v-btn :flat="true" @click="$emit('clicked:target')">
-                        {{ targets[targetKey].toString() }}
-                    </v-btn>
-                </v-col>
-                <v-col cols="2">
-                    <v-btn class="btn-next" :flat="true" @click="next()" :disabled="targetKey >= targets.length-1">
-                        <v-icon icon="mdi-arrow-right-bold" color="grey" />
-                    </v-btn>
-                </v-col>
-            </v-row>
+<!--            <v-row style="text-align: center;">-->
+<!--                <v-col cols="2">-->
+<!--                    <v-btn class="btn-prev" :flat="true" @click="prev()" :disabled="targetKey <= 0">-->
+<!--                        <v-icon icon="mdi-arrow-left-bold" color="grey" />-->
+<!--                    </v-btn>-->
+<!--                </v-col>-->
+<!--                <v-col>-->
+<!--                    <v-btn :flat="true" @click="$emit('clicked:target')">-->
+<!--                        {{ targets[targetKey].toString() }}-->
+<!--                    </v-btn>-->
+<!--                </v-col>-->
+<!--                <v-col cols="2">-->
+<!--                    <v-btn class="btn-next" :flat="true" @click="next()" :disabled="targetKey >= targets.length-1">-->
+<!--                        <v-icon icon="mdi-arrow-right-bold" color="grey" />-->
+<!--                    </v-btn>-->
+<!--                </v-col>-->
+<!--            </v-row>-->
         </v-card-subtitle>
         <v-list>
             <template v-for="task in tasks">
