@@ -24,7 +24,7 @@ class TaskController extends Controller
             userId: Auth::id(),
             title: $request->title,
             note: $request->note ?? '',
-            goalId: $request->goal_id,
+            pathId: $request->path_id,
             date: $request->get('date'),
             is_achieved: $request->is_achieved ?? false
         );
@@ -39,7 +39,7 @@ class TaskController extends Controller
             id: $task->id,
             title: $request->title,
             note: $request->note ?? '',
-            goalId: $request->goal_id,
+            pathId: $request->path_id,
             date: $request->get('date'),
             is_achieved: $request->is_achieved ?? false
         );

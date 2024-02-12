@@ -15,7 +15,7 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
 export interface Task {
     id: number;
     user_id: number;
-    goal_id: number;
+    path_id: number;
     title: string;
     note: string;
     date: string;

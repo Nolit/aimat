@@ -2,7 +2,7 @@
     import {Task} from "@/types";
     import { required } from "@/utils/rules"
     import {useForm} from "@inertiajs/vue3";
-    import {ref} from "vue";
+    import {ref, computed } from "vue";
 
     export interface Props {
         task: Task|undefined
@@ -14,11 +14,12 @@
 
     const form = useForm({
         title: props.task?.title ?? '',
-        goal_id: null,
+        path_id: null,
         note: props.task?.note,
         is_achieved: props.task?.is_achieved
     });
     const vueForm = ref(null)
+    const isEditMode = props.task !== undefined
 
     const options = {
         onFinish: () => {
@@ -52,21 +53,21 @@
         model.value = false
     }
 
-    const goals = [
+    const paths = [
         {
             title: '----------------',
             value: null,
         },
         {
-            title: 'Goal #1',
+            title: 'Path #1',
             value: 1,
         },
         {
-            title: 'Goal #2',
+            title: 'Path #2',
             value: 2,
         },
         {
-            title: 'Goal #3',
+            title: 'Path #3',
             value: 3,
         },
     ]
@@ -105,9 +106,9 @@
                                 md="4"
                             >
                                 <v-select
-                                    :items="goals"
-                                    label="Goal"
-                                    v-model="form.goal_id"
+                                    :items="paths"
+                                    label="Path"
+                                    v-model="form.path_id"
                                     required
                                 ></v-select>
                             </v-col>
@@ -120,14 +121,14 @@
                                 ></v-textarea>
                             </v-col>
                         </v-row>
-                        <v-row>
+                        <v-row v-if="isEditMode">
                             <v-checkbox label="achieved" color="success" v-model="form.is_achieved" />
                         </v-row>
                     </v-container>
                 </v-card-text>
                 <v-card-actions class="px-7">
                     <v-btn
-                        v-if="task !== undefined"
+                        v-if="isEditMode"
                         type="button"
                         color="red"
                         variant="text"

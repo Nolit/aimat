@@ -98,10 +98,10 @@ const openAddingMonthlyTaskModal = () => {
 
         <div class="py-12">
             <v-row>
-                <v-col><TaskCard title="Task" :tasks="tasks" @clicked:add="openTaskModal()" :disable-add="false" @clicked:update="id => openTaskModal(id)" /></v-col>
-                <v-col><TaskCard title="Daily" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
-                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="8"  /></v-col>
-                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="12"  /></v-col>
+                <v-col><TaskCard title="Routine" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
+                <v-col><TaskCard title="Others" :tasks="tasks" @clicked:add="openTaskModal()" :disable-add="false" @clicked:update="id => openTaskModal(id)" /></v-col>
+<!--                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="8"  /></v-col>-->
+<!--                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="12"  /></v-col>-->
             </v-row>
         </div>
     </Layout>

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Commitment extends Model
+class Path extends Model
 {
 
     /**
@@ -13,11 +13,7 @@ class Commitment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'goal_id',
-        'period_type',
-        'target',
-        'target_level',
-        'target_level_unit',
+        'name',
         'note',
     ];
 

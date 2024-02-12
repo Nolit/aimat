@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Goal extends Model
+class Routine extends Model
 {
 
     /**
@@ -13,7 +13,11 @@ class Goal extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
+        'path_id',
+        'name',
+        'type',
+        'target_level',
+        'target_level_unit',
         'note',
     ];
 

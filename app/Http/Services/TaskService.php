@@ -14,24 +14,24 @@ class TaskService
             ->where('user_id', $userId)
             ->get();
     }
-    public function create(int $userId, string $title, string $note = '', ?int $goalId = null, ?string $date = null, bool $is_achieved = false): bool
+    public function create(int $userId, string $title, string $note = '', ?int $pathId = null, ?string $date = null, bool $is_achieved = false): bool
     {
         return (new Task)->fill([
             'user_id' => $userId,
             'title' => $title,
             'note' => $note,
-            'goal_id' => $goalId,
+            'path_id' => $pathId,
             'date' => $date,
             'is_achieved' => $is_achieved,
         ])->save();
     }
-    public function update(int $id, string $title, string $note = '', ?int $goalId = null, ?string $date = null, bool $is_achieved = false): bool
+    public function update(int $id, string $title, string $note = '', ?int $pathId = null, ?string $date = null, bool $is_achieved = false): bool
     {
         $task = Task::findOrFail($id);
         return $task->fill([
             'title' => $title,
             'note' => $note,
-            'goal_id' => $goalId,
+            'path_id' => $pathId,
             'date' => $date,
             'is_achieved' => $is_achieved,
         ])->save();

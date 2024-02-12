@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commitments', function (Blueprint $table) {
+        Schema::create('routines', function (Blueprint $table) {
             $table->id();
-            $table->integer('goal_id');
-            $table->integer('period_type');
-            $table->string('target');
+            $table->integer('path_id');
+            $table->string('name');
+            $table->enum('type', [1, 2, 3]);
             $table->integer('target_level');
             $table->string('target_unit');
             $table->string('note');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commitments');
+        Schema::dropIfExists('routines');
     }
 };
