@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Path\PathController;
+use App\Http\Controllers\Path\RoutineController;
 use App\Http\Controllers\Path\TaskController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,8 +18,6 @@ use Inertia\Inertia;
 |
 */
 
-info('flag is '. (Route::has('login') ? 'true' : 'false'));
-
 Route::get('/', function () {
     return Inertia::render('Welcome');
 });
@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('tasks', TaskController::class);
+
+    Route::resource('paths', PathController::class);
+    Route::resource('routines', RoutineController::class);
 });
 
 Route::put('/locale/{locale}', function($locale) {

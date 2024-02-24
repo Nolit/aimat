@@ -6,6 +6,15 @@ export default {
         register: '会員登録',
         profile: 'マイページ',
         dashboard: 'ダッシュボード',
+        path: '目標',
+        unit: {
+            times: '回',
+            pages: 'ページ',
+            books: '冊',
+            seconds: '秒',
+            minutes: '分',
+            hours: '時間',
+        },
     },
     en: {
         language: 'English',
@@ -13,5 +22,14 @@ export default {
         logout: 'Log out',
         register: 'Register',
         dashboard: 'Dashboard',
+        path: 'Path',
+        unit: {
+            times: 'times',
+            pages: 'pages',
+            books: 'books',
+            seconds: 'seconds',
+            minutes: 'minutes',
+            hours: 'hours',
+        },
     },
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Path extends Model
 {
@@ -31,4 +32,9 @@ class Path extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function routines(): HasMany
+    {
+        return $this->hasMany(Routine::class);
+    }
 }

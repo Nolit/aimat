@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Routine extends Model
 {
@@ -34,4 +35,9 @@ class Routine extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function path(): BelongsTo
+    {
+        return $this->belongsTo(Path::class);
+    }
 }

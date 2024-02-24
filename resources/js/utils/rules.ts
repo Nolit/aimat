@@ -8,5 +8,17 @@ export function email(v) {
 }
 
 export function min(size: Number) {
-    return v => v.length >= size || `Min ${size} characters`
+    return v => {
+        if (typeof v === 'string') {
+            return v.length >= size || `Min ${size} characters`
+        } else if(typeof v === 'number') {
+            return v >= size || `Min ${size} digits`
+        }
+    }
+}
+
+export function minDigit(number: Number) {
+    return v => {
+        return v >= number || `${number} or more`
+    }
 }
