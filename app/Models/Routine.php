@@ -16,8 +16,8 @@ class Routine extends Model
         'path_id',
         'name',
         'type',
-        'target_level',
-        'target_level_unit',
+        'amount',
+        'unit',
         'note',
     ];
 

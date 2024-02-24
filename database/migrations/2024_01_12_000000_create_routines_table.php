@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('path_id');
             $table->string('name');
             $table->enum('type', [1, 2, 3]);
-            $table->integer('target_level');
-            $table->string('target_unit');
+            $table->integer('amount');
+            $table->string('unit');
             $table->string('note');
             $table->timestamps();
         });
