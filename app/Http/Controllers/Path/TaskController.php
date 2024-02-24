@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Task;
+namespace App\Http\Controllers\Path;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\DeleteTaskRequest;
@@ -9,7 +9,6 @@ use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Services\TaskService;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 class TaskController extends Controller
 {
