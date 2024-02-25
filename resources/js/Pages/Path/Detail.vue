@@ -46,7 +46,7 @@ const deleteRoutine = (routine: Routine) => {
 };
 
 const reloadRoutines = () => {
-    alert('called reloadRoutines')
+    //TODO: show a toast for success.
 }
 
 const desserts = [

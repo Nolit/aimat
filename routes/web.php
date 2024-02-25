@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('paths', PathController::class);
     Route::resource('routines', RoutineController::class);
+    Route::put('/routines/{routine}/today_progress', [RoutineController::class, 'updateTodayProgress'])->name('routines.today-progress.put');
 });
 
 Route::put('/locale/{locale}', function($locale) {

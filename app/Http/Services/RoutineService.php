@@ -35,6 +35,13 @@ class RoutineService
         ])->save();
     }
 
+    public function updateTodayProgress(int $id, int $value): bool
+    {
+        $routine = Routine::findOrFail($id);
+        $todayProgress = $routine->todayProgress()->firstOrNew();
+        return $todayProgress->fill(['value' => $value])->save();
+    }
+
     public function delete(int $id): bool
     {
         return Routine::destroy([$id]);

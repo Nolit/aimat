@@ -17,8 +17,11 @@ import {
 import TaskModal from "@/Components/Task/TaskModal.vue";
 import {Ref, ref, nextTick, computed} from "vue";
 import {Task} from "@/types";
+import Path from "@/Models/Path";
+import RoutineListCard from "@/Components/Cards/RoutineListCard.vue";
 
-const props = defineProps({ canRegister: Boolean, canLogin: Boolean, canLogout: Boolean, tasks: Array<Task> })
+const props = defineProps({ tasks: Array<Task>, paths: Array<Path> })
+
 
 const taskModal: Ref<{task: Task|null, open: boolean}> = ref({
     task: null,
@@ -98,7 +101,7 @@ const openAddingMonthlyTaskModal = () => {
 
         <div class="py-12">
             <v-row>
-                <v-col><TaskCard title="Routine" :tasks="todayTodo" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
+                <v-col><RoutineListCard title="Routine" :paths="paths" @clicked:add="openAddingDailyTaskModal" :targets="targetsForDaily" :target-key="30" /></v-col>
                 <v-col><TaskCard title="Others" :tasks="tasks" @clicked:add="openTaskModal()" :disable-add="false" @clicked:update="id => openTaskModal(id)" /></v-col>
 <!--                <v-col><TaskCard title="Weekly" :tasks="todayTodo" @clicked:add="openAddingWeeklyTaskModal" :targets="targetsForWeekly" :target-key="8"  /></v-col>-->
 <!--                <v-col><TaskCard title="Monthly" :tasks="todayTodo" @clicked:add="openAddingMonthlyTaskModal" :targets="targetsForMonthly" :target-key="12"  /></v-col>-->

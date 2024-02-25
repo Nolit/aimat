@@ -15,6 +15,15 @@ class PathService
             ->orderBy('created_at', 'desc')
             ->get();
     }
+    public function getWithRoutines(int $userId): Collection
+    {
+        return Path
+            ::where('user_id', $userId)
+            ->has('routines')
+            ->with('routines.todayProgress')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 
     public function createDefault(int $userId)
     {

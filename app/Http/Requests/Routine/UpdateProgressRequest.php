@@ -4,12 +4,12 @@ namespace App\Http\Requests\Routine;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoutineRequest extends FormRequest
+class UpdateProgressRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'name' => 'required'
+            'value' => 'required'
         ];
     }
 

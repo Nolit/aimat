@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Routine extends Model
+class Progress extends Model
 {
 
     /**
@@ -15,12 +15,8 @@ class Routine extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'path_id',
-        'name',
-        'type',
-        'amount',
-        'unit',
-        'note',
+        'routine_id',
+        'value',
     ];
 
     /**
@@ -37,13 +33,10 @@ class Routine extends Model
      */
     protected $casts = [];
 
-    public function path(): BelongsTo
+    public function scopeToday(Builder $query): Builder
     {
-        return $this->belongsTo(Path::class);
-    }
-
-    public function todayProgress(): HasOne
-    {
-        return $this->hasOne(Progress::class)->today();
+        $from = today()->startOfDay();
+        $to = today()->endOfDay();
+        return $query->whereBetween('created_at', [$from, $to]);
     }
 }

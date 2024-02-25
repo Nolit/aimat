@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Path;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Path\UpdatePathRequest;
 use App\Http\Requests\Path\UpdateRoutineRequest;
 use App\Http\Services\PathService;
 use App\Models\Path;
@@ -35,7 +36,7 @@ class PathController extends Controller
         ]);
     }
 
-    public function update(UpdateRoutineRequest $request, Path $path, )
+    public function update(UpdatePathRequest $request, Path $path, )
     {
         if ($request->user()->cannot('update', $path)) {
             return redirect()->back()->withErrors(['forbidden operation']);

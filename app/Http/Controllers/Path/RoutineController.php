@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Path;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Path\UpdateRoutineRequest;
 use App\Http\Requests\Routine\CreateRoutineRequest;
 use App\Http\Requests\Routine\DeleteRoutineRequest;
+use App\Http\Requests\Routine\UpdateProgressRequest;
+use App\Http\Requests\Routine\UpdateRoutineRequest;
 use App\Http\Services\PathService;
 use App\Http\Services\RoutineService;
 use App\Models\Path;
@@ -43,7 +44,7 @@ class RoutineController extends Controller
             1,
             $request->amount,
             $request->unit,
-            $request->note,
+            $request->note ?? '',
         );
     }
 
@@ -54,6 +55,17 @@ class RoutineController extends Controller
         }
         $this->routineService->delete(
             id: $routine->id,
+        );
+    }
+
+    public function updateTodayProgress(UpdateProgressRequest $request, Routine $routine)
+    {
+        if ($request->user()->cannot('update', $routine)) {
+            return redirect()->back()->withErrors(['forbidden operation']);
+        }
+        $this->routineService->updateTodayProgress(
+            $routine->id,
+            $request->value,
         );
     }
 }
