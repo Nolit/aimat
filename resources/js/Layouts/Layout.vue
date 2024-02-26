@@ -20,7 +20,7 @@ const isGuest = page.props.isGuest
 
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar height="80">
+        <v-app-bar height="80" class="px-15">
             <v-row justify="start">
                 <v-img src="/images/logo.png" max-width="150px" max-height="100" class="ml-7" />
             </v-row>
@@ -46,6 +46,11 @@ const isGuest = page.props.isGuest
                         <v-list-item v-if="!isGuest">
                             <v-list-item-title>
                                 <Link :href="route('dashboard')">{{ $t('dashboard') }}</Link>
+                            </v-list-item-title>
+                        </v-list-item>
+                        <v-list-item v-if="!isGuest">
+                            <v-list-item-title>
+                                <Link :href="route('paths.index')">{{ $t('path') }}</Link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item v-if="isGuest">
