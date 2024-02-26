@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Path;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Path\DeletePathRequest;
 use App\Http\Requests\Path\UpdatePathRequest;
 use App\Http\Requests\Path\UpdateRoutineRequest;
 use App\Http\Services\PathService;
@@ -46,5 +47,15 @@ class PathController extends Controller
             name: $request->name,
             note: $request->note ?? '',
         );
+    }
+
+    public function destroy(DeletePathRequest $request, Path $path)
+    {
+        if ($request->user()->cannot('delete', $path)) {
+            return redirect()->back()->withErrors(['forbidden operation']);
+        }
+        $this->pathService->delete($path->id);
+
+        return to_route('paths.index');
     }
 }

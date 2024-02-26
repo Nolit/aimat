@@ -15,6 +15,7 @@ export default {
             minutes: '分',
             hours: '時間',
         },
+        confirm_deletion: '本当に削除しますか？'
     },
     en: {
         language: 'English',
@@ -31,5 +32,6 @@ export default {
             minutes: 'minutes',
             hours: 'hours',
         },
+        confirm_deletion: 'Are you sure you want to delete this data?'
     },
 }

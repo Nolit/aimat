@@ -7,6 +7,8 @@ import {required} from "@/utils/rules";
 import TaskModal from "@/Components/Task/TaskModal.vue";
 import RoutineModal from "@/Components/Modals/RoutineModal.vue";
 import Routine from "@/Models/Routine";
+import {useI18n} from "vue-i18n";
+const i18n = useI18n();
 
 const props = defineProps({
     path: {
@@ -49,48 +51,12 @@ const reloadRoutines = () => {
     //TODO: show a toast for success.
 }
 
-const desserts = [
-    {
-        name: 'Frozen Yogurt',
-        calories: 159,
-    },
-    {
-        name: 'Ice cream sandwich',
-        calories: 237,
-    },
-    {
-        name: 'Eclair',
-        calories: 262,
-    },
-    {
-        name: 'Cupcake',
-        calories: 305,
-    },
-    {
-        name: 'Gingerbread',
-        calories: 356,
-    },
-    {
-        name: 'Jelly bean',
-        calories: 375,
-    },
-    {
-        name: 'Lollipop',
-        calories: 392,
-    },
-    {
-        name: 'Honeycomb',
-        calories: 408,
-    },
-    {
-        name: 'Donut',
-        calories: 452,
-    },
-    {
-        name: 'KitKat',
-        calories: 518,
-    },
-]
+const openDeleteDialog = () => {
+    if (confirm(i18n.t('confirm_deletion'))) {
+        form.delete(route('paths.destroy', {'id': props.path?.id }))
+    }
+}
+
 
 </script>
 
@@ -118,7 +84,16 @@ const desserts = [
                     v-model="form.note"
                 ></v-textarea>
 
-                <v-card-actions class="px-7 d-flex flex-row justify-end">
+                <v-card-actions class="px-7">
+                    <v-btn
+                        type="button"
+                        color="red"
+                        variant="text"
+                        @click="openDeleteDialog()"
+                    >
+                        Delete
+                    </v-btn>
+                    <v-spacer></v-spacer>
                     <v-btn
                         type="submit"
                         color="blue-darken-1"
