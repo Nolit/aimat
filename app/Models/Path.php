@@ -33,6 +33,14 @@ class Path extends Model
      */
     protected $casts = [];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function (self $path) {
+            $path->routines()->delete();
+        });
+    }
+
     public function routines(): HasMany
     {
         return $this->hasMany(Routine::class);
