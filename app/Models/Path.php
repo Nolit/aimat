@@ -45,4 +45,9 @@ class Path extends Model
     {
         return $this->hasMany(Routine::class);
     }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
 }

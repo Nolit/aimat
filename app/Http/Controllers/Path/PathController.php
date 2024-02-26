@@ -33,7 +33,7 @@ class PathController extends Controller
     public function show(Path $path)
     {
         return Inertia::render('Path/Detail')->with([
-            'path' => $path->load('routines')
+            'path' => $path->load('routines', 'tasks')
         ]);
     }
 

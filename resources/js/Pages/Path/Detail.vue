@@ -8,6 +8,7 @@ import TaskModal from "@/Components/Task/TaskModal.vue";
 import RoutineModal from "@/Components/Modals/RoutineModal.vue";
 import Routine from "@/Models/Routine";
 import {useI18n} from "vue-i18n";
+import TaskListCard from "@/Components/Cards/TaskListCard.vue";
 const i18n = useI18n();
 
 const props = defineProps({
@@ -154,6 +155,7 @@ const openDeleteDialog = () => {
                 </v-btn>
             </v-card-actions>
         </v-card>
+        <TaskListCard :tasks="path.tasks" />
     </Layout>
     <RoutineModal v-if="routineModal.open" v-model="routineModal.open" :routine="routineModal.routine" @updated:task="reloadRoutines()">
 
