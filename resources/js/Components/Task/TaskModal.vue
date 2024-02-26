@@ -3,9 +3,11 @@
     import { required } from "@/utils/rules"
     import {useForm} from "@inertiajs/vue3";
     import {ref, computed } from "vue";
+    import Path from "@/Models/Path";
 
     export interface Props {
-        task: Task|undefined
+        task: Task|undefined,
+        paths: Array<Path>
     }
 
     const props = defineProps<Props>();
@@ -14,7 +16,7 @@
 
     const form = useForm({
         title: props.task?.title ?? '',
-        path_id: null,
+        path_id: props.task?.path_id,
         note: props.task?.note,
         is_achieved: props.task?.is_achieved
     });
@@ -53,24 +55,12 @@
         model.value = false
     }
 
-    const paths = [
-        {
-            title: '----------------',
-            value: null,
-        },
-        {
-            title: 'Path #1',
-            value: 1,
-        },
-        {
-            title: 'Path #2',
-            value: 2,
-        },
-        {
-            title: 'Path #3',
-            value: 3,
-        },
-    ]
+    const paths = props.paths.map(path => {
+        return {
+            title: path.name,
+            value: path.id,
+        }
+    })
 </script>
 
 <template>
@@ -109,6 +99,7 @@
                                     :items="paths"
                                     label="Path"
                                     v-model="form.path_id"
+
                                     required
                                 ></v-select>
                             </v-col>

@@ -110,7 +110,7 @@ const openAddingMonthlyTaskModal = () => {
     </Layout>
 
 
-    <TaskModal v-if="taskModal.open" v-model="taskModal.open" :task="taskModal.task" @updated:task="reloadTasks()">
+    <TaskModal v-if="taskModal.open" v-model="taskModal.open" :task="taskModal.task" :paths="paths" @updated:task="reloadTasks()">
 
     </TaskModal>
 </template>
