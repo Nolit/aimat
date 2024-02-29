@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import {computed, reactive, ref} from 'vue';
-import Target from '@/Components/Task/Target'
-import Routine from "@/Models/Routine";
+import {computed, reactive} from 'vue';
 import Path from "@/Models/Path";
 import ProgressModal from "@/Components/Modals/ProgressModal.vue";
+import {useI18n} from "vue-i18n";
+const i18n = useI18n();
 
 const isRoutineCompleted = routine => (routine.today_progress?.value ?? 0) >= routine.amount
 
 export interface Props {
-    paths: Array<Path>
+    paths: Array<Path>,
+    title: String
 }
 
 const props = withDefaults(defineProps<Props>(), {
     paths: [],
+    title: ''
 })
 
 const emit = defineEmits(['clicked:routine']);
@@ -47,11 +49,38 @@ const progressUpdated = routine => {
     console.log(`${routine.name} is progressed!!`);
 }
 
+const tweet = () => {
+    const routines = props.paths.flatMap(path => {
+        return path.routines
+    })
+    const headerContents = i18n.t('tweet_header') + "\n"
+    const routineContents = routines
+        .filter(routine => routine.today_progress?.value)
+        .map(routine => {
+            const routineName = routine.name
+            const amountOfProgress = routine.today_progress?.value ?? 0
+            return `・${routineName} ${amountOfProgress}${(routine.unit)}`
+        })
+        .join("\n") + "\n"
+
+    const contents = headerContents + routineContents
+
+    const s = encodeURIComponent(contents);
+    var url = document.location.href;
+
+    if (contents != "") {
+        url = "http://twitter.com/share?url=" + escape(url) + "&text=" + s;
+        window.open(url);
+    }
+}
 
 </script>
 
 <template>
-    <v-card title="Routine" min-height="100" min-width="500">
+    <v-card :title="title" min-height="100" min-width="500">
+        <template v-slot:append>
+            <v-icon icon="mdi-share-all" @click="tweet()" />
+        </template>
         <v-list :opened="incompletedPathIds">
             <template v-for="path in paths">
                 <v-list-group :value="path.id">

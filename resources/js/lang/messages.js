@@ -15,7 +15,8 @@ export default {
             minutes: '分',
             hours: '時間',
         },
-        confirm_deletion: '本当に削除しますか？'
+        confirm_deletion: '本当に削除しますか？',
+        tweet_header: '今日頑張ったこと！'
     },
     en: {
         language: 'English',
@@ -32,6 +33,8 @@ export default {
             minutes: 'minutes',
             hours: 'hours',
         },
-        confirm_deletion: 'Are you sure you want to delete this data?'
+        confirm_deletion: 'Are you sure you want to delete this data?',
+        tweet_header: 'Today\'s progress!!'
+
     },
 }
