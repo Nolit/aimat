@@ -75,7 +75,7 @@ const openAddingMonthlyTaskModal = () => {
 <template>
     <Head title="Dashboard" />
 
-    <Layout :can-register="canRegister" :can-login="canLogin" :can-logout="canLogout">
+    <Layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
         </template>
