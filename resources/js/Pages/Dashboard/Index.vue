@@ -18,7 +18,7 @@ import TaskModal from "@/Components/Task/TaskModal.vue";
 import {Ref, ref, nextTick, computed} from "vue";
 import {Task} from "@/types";
 import Path from "@/Models/Path";
-import RoutineListCard from "@/Components/Cards/RoutineListCard.vue";
+import RoutineListCard from "@/Pages/Dashboard/Components/RoutineListCard.vue";
 
 const props = defineProps({ tasks: Array<Task>, paths: Array<Path> })
 
@@ -50,25 +50,6 @@ const datesOfMonth = [subYears(today, 1)]
 for (let i=0; i<24; i++) {
     datesOfMonth.push(addMonths(datesOfMonth[datesOfMonth.length-1], 1))
 }
-const targetsForMonthly = datesOfMonth.map(date => new Target(format(date, 'MMMM yyyy')))
-
-const todayTodo = [
-    {
-        title: 'Item #1',
-        id: 1,
-        completed: true
-    },
-    {
-        title: 'Item #2',
-        id: 2,
-        completed: true
-    },
-    {
-        title: 'Item #3',
-        id: 3,
-        completed: false
-    },
-]
 
 const openTaskModal = (id?: number|null) => {
     taskModal.value.task = props.tasks.find((task) => task.id === id)

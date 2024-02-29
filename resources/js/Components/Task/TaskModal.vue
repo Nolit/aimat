@@ -6,22 +6,24 @@
     import Path from "@/Models/Path";
 
     export interface Props {
-        task: Task|undefined,
-        paths: Array<Path>
+        task: Task|null,
+        paths: Array<Path>,
     }
 
     const props = defineProps<Props>();
     const model = defineModel()
     const emit = defineEmits(['updated:task']);
 
+    const defaultPathId = props.task?.path_id ?? props.paths.length === 1 ? props.paths[0].id : null
+
     const form = useForm({
         title: props.task?.title ?? '',
-        path_id: props.task?.path_id,
+        path_id: defaultPathId,
         note: props.task?.note,
-        is_achieved: props.task?.is_achieved
+        is_achieved: Boolean(props.task?.is_achieved)
     });
     const vueForm = ref(null)
-    const isEditMode = props.task !== undefined
+    const isEditMode = props.task !== null
 
     const options = {
         onFinish: () => {

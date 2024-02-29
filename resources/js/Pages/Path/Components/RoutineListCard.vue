@@ -5,36 +5,38 @@ import Routine from "@/Models/Routine";
 import Path from "@/Models/Path";
 import ProgressModal from "@/Components/Modals/ProgressModal.vue";
 import {Task} from "@/types";
+import {useForm} from "@inertiajs/vue3";
+import RoutineModal from "@/Components/Modals/RoutineModal.vue";
 
 const isRoutineCompleted = routine => (routine.today_progress?.value ?? 0) >= routine.amount
 
 export interface Props {
-    tasks: Array<Task>
+    path: Path
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    tasks: [],
+    path: null,
 })
+
+const form = useForm({});
 
 const emit = defineEmits([]);
 
-
-const taskModal = reactive({
+const routineModal = reactive({
     open: false,
-    task: undefined
+    routine: new Routine(undefined, props.path.id)
 })
 
-const deleteTask = (task: Task) => {
-
+const openRoutineModal = (routine: Routine) => {
+    routineModal.routine = routine ? routine : new Routine(undefined, props.path.id)
+    routineModal.open = true
 }
+const deleteRoutine = (routine: Routine) => {
+    form.delete(route('routines.destroy', { id: routine.id }));
+};
 
-const openTaskModal = task => {
-    taskModal.task = task
-    taskModal.open = true
-}
-
-const taskUpdated = (task: Task) => {
-    console.log(`${task.title} is updated!!`);
+const reloadRoutines = () => {
+    //TODO: show a toast for success.
 }
 
 
@@ -45,7 +47,7 @@ const taskUpdated = (task: Task) => {
         class="px-3 pt-3 my-5"
         min-width="800px"
         min-height="300px"
-        title="Task"
+        title="Routine"
     >
         <v-table
             fixed-header
@@ -53,14 +55,11 @@ const taskUpdated = (task: Task) => {
         >
             <thead>
             <tr>
-                <th class="text-left" width="30px">
-
-                </th>
                 <th class="text-left">
                     Name
                 </th>
                 <th class="text-left">
-                    Note
+                    Amount
                 </th>
                 <th class="text-left">
                     Action
@@ -69,19 +68,14 @@ const taskUpdated = (task: Task) => {
             </thead>
             <tbody>
             <tr
-                v-for="task in tasks"
-                :key="task.id"
+                v-for="routine in path.routines"
+                :key="routine.id"
             >
+                <td>{{ routine.name }}</td>
+                <td>{{ routine.amount }}{{ routine.unit}}</td>
                 <td>
-                    <v-icon icon="mdi-check" color="red" v-if="task.is_achieved" />
-                </td>
-                <td>
-                    {{ task.title }}
-                </td>
-                <td style="max-width: 200px">{{ task.note }}</td>
-                <td>
-                    <v-icon @click="deleteTask(task)" icon="mdi-delete" color="red mr-6" />
-                    <v-icon @click="openTaskModal(task)" icon="mdi-pencil" color="grey" />
+                    <v-icon @click="deleteRoutine(routine)" icon="mdi-delete" color="red mr-6" />
+                    <v-icon @click="openRoutineModal(routine)" icon="mdi-pencil" color="grey" />
                 </td>
             </tr>
             </tbody>
@@ -92,12 +86,16 @@ const taskUpdated = (task: Task) => {
                 type="submit"
                 color="blue-darken-1"
                 variant="text"
-                @click="openTaskModal(null)"
+                @click="openRoutineModal(null)"
             >
                 Create
             </v-btn>
         </v-card-actions>
     </v-card>
+
+    <RoutineModal v-if="routineModal.open" v-model="routineModal.open" :routine="routineModal.routine" @updated:task="reloadRoutines()">
+
+    </RoutineModal>
 </template>
 
 <style scoped>

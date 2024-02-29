@@ -18,7 +18,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return Inertia::render('Dashboard')->with([
+        return Inertia::render('Dashboard/Index')->with([
             'tasks' => $this->taskService->get(Auth::id()),
             'paths' => $this->pathService->getWithRoutines(Auth::id()),
         ]);
